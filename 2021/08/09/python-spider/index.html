@@ -1,0 +1,447 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="python网络爬虫与信息提取  ">
+  <meta name="author" content="anqi">
+  <meta name="keywords" content="">
+  
+  <title>Python Spider - 你睡了吗</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>anqi</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Python Spider">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-09 09:15" pubdate>
+        2021年8月9日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python Spider</h1>
+            
+            <div class="markdown-body">
+              <p>python网络爬虫与信息提取  </p>
+<span id="more"></span>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>python作为一门热门语言，本专业也开设有python课程（暂时还未上），曾经在参加建模的时候自学了一段时间的python，当时对基础语法进行了速成，通过现有的例子去模仿着来做一些简单的Excel处理，没有很系统的去学习这门语言，也是在那个时候了解到了爬虫和数据提取，当时就觉得爬取网页特别的有意思而且有很大的实际作用，于是，通过闲余的零碎时间在MOOC上通过<em>北京理工大学——python网络爬虫与信息提取</em>这门网课进行了简单的学习，并以本篇做下了笔记与记录  </p>
+<h1 id="前奏"><a href="#前奏" class="headerlink" title="前奏"></a>前奏</h1><h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>百度百科定义：  </p>
+<blockquote>
+<p>API（Application Programming Interface，应用程序接口）是一些预先定义的接口（如函数、HTTP接口），或指软件系统不同组成部分衔接的约定。用来提供应用程序与开发人员基于某软件或硬件得以访问的一组例程，而又无需访问源码，或理解内部工作机制的细节<br>通过他人的一个生动例子来类似举例：<br>我的室友热爱刷B站，和广大冲浪选手一样喜欢看男孩子都爱看的，每当他看到了喜欢的就会默默加入自己的收藏夹（以便反复观摩和分享），那么我们其他人也喜欢看但是又没有他专业，那就只好关注他，然后再去他的收藏夹看就可以了，并且他还和我们说了一个“规矩”：看完后不要三连广泛传播，以便能长期看到更新<br>那么他的账号ID就是对于我们一个API，我们不需要知道他是怎么找到的，只需要从他的收藏夹默默观看就行，同时这个“规矩”就是我们和他完成这个交互操作所遵循的规则，即API协议  </p>
+</blockquote>
+<h2 id="所用工具"><a href="#所用工具" class="headerlink" title="所用工具"></a>所用工具</h2><p>IDE：Pycharm<br>接触和使用过很多的IDE，例如IDLE，vscode，sublime，eclipse，pycharm等等，一直以来能比较喜欢jetbrains那一套风格的IDE，所以pycharm为主力长期使用  </p>
+<h1 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h1><h2 id="requests"><a href="#requests" class="headerlink" title="requests"></a>requests</h2><p>Requests是入门级使用最多HTTP第三方库，对内在模块进行了高度的封装，简单实用可以节省很大的工作量  </p>
+<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> requests                             <span class="hljs-comment">#import requests库</span><br>r = requests.get(<span class="hljs-string">&quot;http://www.baidu.com&quot;</span>)    <span class="hljs-comment">#get(URL)</span><br>r.encodeing                                 <span class="hljs-comment">#查看当前编码方式</span><br>r.apparent_encoding                         <span class="hljs-comment">#备选编码方式</span><br>r.encoding = <span class="hljs-string">&#x27;utf-8&#x27;</span>                        <span class="hljs-comment">#更改编码方式为utf-8</span><br>r.status_code                               <span class="hljs-comment">#http状态码，200表示OK</span><br>r.text                                      <span class="hljs-comment">#url对应的网络页面</span><br>r.content                                   <span class="hljs-comment">#http相应内容的二进制形式</span><br></code></pre></td></tr></table></figure>
+<p>tip: requests.get(url,parmas=None,**kwargs)  </p>
+<h3 id="通用代码框架"><a href="#通用代码框架" class="headerlink" title="通用代码框架"></a>通用代码框架</h3><p>有效的处理访问网页过程中出现的异常问题，使访问变得更有效，更可靠  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getHTMLText</span>(<span class="hljs-params">url</span>):</span><br>    <span class="hljs-keyword">try</span>:<br>        r = requests.get(url, timeout=<span class="hljs-number">30</span>)<br>        r.raise_for_status()                <span class="hljs-comment"># 如果状态不是200，引发HTTPError异常</span><br>        r.encoding = r.apparent_encoding<br>        <span class="hljs-keyword">return</span> r.text<br>    <span class="hljs-keyword">except</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;error&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="HTTP协议与requests常用方法"><a href="#HTTP协议与requests常用方法" class="headerlink" title="HTTP协议与requests常用方法"></a>HTTP协议与requests常用方法</h3><p>HTTP协议是一种基于“请求与响应”模式的、无状态的应用层协议；URL即通过HTTP协议存储资源的internet路径，一个URL对应一个数据资源<br><br>requests的七个主要用法：<br><img src="/img/python/requests.png" srcset="/img/loading.gif" lazyload><br>requests库的主要7个方法中request方式则是所有方法的基础方法，并且与http的主要方法的用途是一致的<br><img src="/img/python/requests_and_http.png" srcset="/img/loading.gif" lazyload></p>
+<p>重点方法：requests.request(method,url,**kwargs)<br>method：请求方式，即”get”、”head”、”post”等<br>kwargs：控制访问的参数，为可选项，常用参数为：  </p>
+<blockquote>
+<p>params：字典或者字节序列，作为参数增加到url中<br>data：字典或者字节序列，作为参数增加到url中<br>json：json格式的数据，作为request的内容<br>headers：字典，http定制头<br>cookies：字典或者CookiesJar，request中的cookie<br>auth：元组，支持http认证功能<br>file：字典，传输文件<br>timeout：设定超时时间，以秒为单位<br>stream：true/false，默认为false，获取内如立即下载开关</p>
+</blockquote>
+<h2 id="Robots协议"><a href="#Robots协议" class="headerlink" title="Robots协议"></a>Robots协议</h2><p>对服务器上所能查看的内容进行一个协议规定，并不是规范而是约定俗成的，并不能保证隐私<br>存在：写在网站根目录下的robots.txt<br>基本语法：  </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">User-agent:</span> <span class="hljs-string">*</span>       <span class="hljs-comment">#所有spider</span><br><span class="hljs-attr">Disallow:</span> <span class="hljs-string">/</span>         <span class="hljs-comment">#不允许方法的根目录</span><br></code></pre></td></tr></table></figure>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="headers"><a href="#headers" class="headerlink" title="headers"></a>headers</h3><p>在对某些网站进行爬虫时，网站会根据检查访问的http头来是否是由一个爬虫引起的，因此则需要通过修改headers字段来将爬虫模拟成浏览器来对服务器进行一个http的请求进而实现访问<br>以亚马逊中国的某个电子书产品页面为例：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py">url = <span class="hljs-string">&quot;https://www.amazon.cn/dp/B099ZY9QPG&quot;</span><br><span class="hljs-keyword">try</span>:<br>    kv = &#123;<span class="hljs-string">&#x27;uers-agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0&#x27;</span>&#125;<br>    r = requests.get(url, headers=kv)<br>    r.raise_for_status()<br>    r.encoding = r.apparent_encoding<br>    <span class="hljs-built_in">print</span>(r.text[<span class="hljs-number">0</span>:<span class="hljs-number">1000</span>])<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;spider error&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><p>搜索引擎一般会提供关键词提交接口，对requests库只需要通过parmas参数对url进行构造修改就可以实现关键词的提取<br>以百度为例<a target="_blank" rel="noopener" href="http://www.baidu.com/s?**wd**=keyword">http://www.baidu.com/s?**wd**=keyword</a> ：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py">keyword = <span class="hljs-string">&quot;python&quot;</span><br><span class="hljs-keyword">try</span>:<br>    kv=&#123;<span class="hljs-string">&quot;wd&quot;</span>: keyword&#125;<br>    r=requests.get(<span class="hljs-string">&quot;http://www.baidu.com/s&quot;</span>,params=kv)<br>    <span class="hljs-built_in">print</span>(r.request.url)<br>    r.raise_for_status()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(r.text))<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;error&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> os                               <span class="hljs-comment"># os库实现文件的基本操作</span><br>url = <span class="hljs-string">&quot;https://nishuilema.top/img/profile_photo.jpg&quot;</span><br>root = <span class="hljs-string">&quot;E://&quot;</span><br>path = root + url.split(<span class="hljs-string">&#x27;/&#x27;</span>)[-<span class="hljs-number">1</span>]        <span class="hljs-comment"># 截取url最后一个/后面的名字，即原图片名</span><br><span class="hljs-keyword">try</span>:<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(root):<br>        os.mkdir(root)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(path):        <span class="hljs-comment"># 没有目录则新建</span><br>        r = requests.get(url)<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            f.write(r.content)          <span class="hljs-comment"># 图片以二进制保存</span><br>            f.close()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;save success&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;file existed&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;spider error&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="ip归属地"><a href="#ip归属地" class="headerlink" title="ip归属地"></a>ip归属地</h3><p>通过ip138网站来实现对ip归属地的查找  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py">url = <span class="hljs-string">&quot;https://www.ip138.com/ip.asp?ip=&quot;</span><br><span class="hljs-keyword">try</span>:<br>    r = requests.get(url+<span class="hljs-string">&#x27;219.153.130.78&#x27;</span>)      <span class="hljs-comment"># cqnu官方ip</span><br>    r.raise_for_status()<br>    r.encoding = r.apparent_encoding<br>    <span class="hljs-built_in">print</span>(r.text[-<span class="hljs-number">500</span>:])<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-comment"># print(r.status_code)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;error&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h1 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h1><h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/python/">python</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/27/python%E8%A7%84%E8%8C%83%E5%8F%8APEP%208/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python PEP 8</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/30/SE-and-UML/">
+                        <span class="hidden-mobile">SE and UML</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
