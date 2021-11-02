@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      1.6k 字
     </span>
   
 
@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      18
+      19
        分钟
     </span>
   
@@ -244,7 +244,10 @@
 <h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> os                               <span class="hljs-comment"># os库实现文件的基本操作</span><br>url = <span class="hljs-string">&quot;https://nishuilema.top/img/profile_photo.jpg&quot;</span><br>root = <span class="hljs-string">&quot;E://&quot;</span><br>path = root + url.split(<span class="hljs-string">&#x27;/&#x27;</span>)[-<span class="hljs-number">1</span>]        <span class="hljs-comment"># 截取url最后一个/后面的名字，即原图片名</span><br><span class="hljs-keyword">try</span>:<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(root):<br>        os.mkdir(root)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(path):        <span class="hljs-comment"># 没有目录则新建</span><br>        r = requests.get(url)<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            f.write(r.content)          <span class="hljs-comment"># 图片以二进制保存</span><br>            f.close()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;save success&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;file existed&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;spider error&quot;</span>)<br></code></pre></td></tr></table></figure>
 <h3 id="ip归属地"><a href="#ip归属地" class="headerlink" title="ip归属地"></a>ip归属地</h3><p>通过ip138网站来实现对ip归属地的查找  </p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py">url = <span class="hljs-string">&quot;https://www.ip138.com/ip.asp?ip=&quot;</span><br><span class="hljs-keyword">try</span>:<br>    r = requests.get(url+<span class="hljs-string">&#x27;219.153.130.78&#x27;</span>)      <span class="hljs-comment"># cqnu官方ip</span><br>    r.raise_for_status()<br>    r.encoding = r.apparent_encoding<br>    <span class="hljs-built_in">print</span>(r.text[-<span class="hljs-number">500</span>:])<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-comment"># print(r.status_code)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;error&quot;</span>)<br></code></pre></td></tr></table></figure>
-<h1 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h1><h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1>
+<h1 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h1><h2 id="Beautiful-Soup库入门"><a href="#Beautiful-Soup库入门" class="headerlink" title="Beautiful Soup库入门"></a>Beautiful Soup库入门</h2><p>Beautiful Soup库是解析、遍历、维护“标签树”的功能库<br>BeautifulSoup类对应一个HTML/XML文档的全部内容  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br>soup = BeautifulSoup(<span class="hljs-string">&#x27;&lt;p&gt;data&lt;p&gt;&#x27;</span>, <span class="hljs-string">&#x27;html.parser&#x27;</span>)  <span class="hljs-comment"># &#x27;html.parser&#x27;——简单的HTML解释器</span><br></code></pre></td></tr></table></figure>
+<p><img src="/img/python/beautifulsoup1.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1>
             </div>
             <hr>
             <div>
