@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="LeetCode 报错：Line 1034: Char 9: runtime error: reference binding to null pointer of type ‘int’ (stl_vector.h)  ">
+  <meta name="description" content="HTTP/HTTPS简述">
   <meta name="author" content="anqi">
   <meta name="keywords" content="">
   
-  <title>out_of_bounds - 你睡了吗</title>
+  <title>HTTP/HTTPS - 你睡了吗</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -151,7 +151,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="out_of_bounds">
+            <span class="h2" id="subtitle" title="HTTP/HTTPS">
               
             </span>
 
@@ -161,8 +161,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-02 20:13" pubdate>
-        2021年11月2日 晚上
+      <time datetime="2023-02-28 16:24" pubdate>
+        2023年2月28日 下午
       </time>
     </span>
   
@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      313 字
+      1.1k 字
     </span>
   
 
@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      12
        分钟
     </span>
   
@@ -213,19 +213,91 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">out_of_bounds</h1>
+            <h1 style="display: none">HTTP/HTTPS</h1>
             
             <div class="markdown-body">
-              <p>LeetCode 报错：Line 1034: Char 9: runtime error: reference binding to null pointer of type ‘int’ (stl_vector.h)  </p>
+              <p>HTTP/HTTPS简述</p>
 <span id="more"></span>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>LeetCode 刷题遇到 Line 1034: Char 9: runtime error: reference binding to null pointer of type ‘int’ (stl_vector.h)等类似问题  </p>
-<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>该主要引起的原因是vector容器出现空指针，而导致了越界<br>在做题时，我先取了vector容器的首位，即vector[0]，然后再进行<em>nums.size() == 0</em>的判断，于是就出现了报错  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++">错误：<br>vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums;<br><span class="hljs-keyword">int</span> index = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">int</span> compare = nums[<span class="hljs-number">0</span>]; <br><span class="hljs-keyword">if</span>(nums.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>vector在还没有分配任何空间时不能像数组一样用下标形式去访问vector，就算是vector[0]也不行，编译能通过，运行后就会runtime error</p>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>将<em>nums.size() == 0</em>的判断放到最前面  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++">修改后：<br>vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums;<br><span class="hljs-keyword">if</span>(nums.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br>    <span class="hljs-keyword">int</span> index = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> compare = nums[<span class="hljs-number">0</span>]; <br></code></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>数组为静态分配内存，创建时需确定大小然后给它分配空间，但vector是动态数组，允许跳过分配创建且编译无问题，但运行就报错，即runtime error<br>在使用vector时，应该先进行push_back()或直接对容器赋值等形式，分配空间后，才能用类似数组的[]形式访问</p>
+<h1 id="HTTP-HTTPS"><a href="#HTTP-HTTPS" class="headerlink" title="HTTP/HTTPS"></a>HTTP/HTTPS</h1><h2 id="1-http"><a href="#1-http" class="headerlink" title="1. http"></a>1. http</h2><h3 id="1-1-简述"><a href="#1-1-简述" class="headerlink" title="1. 1 简述"></a>1. 1 简述</h3><p>web通信是建立在http基础上，客户端发出http请求，服务器根据请求做出相应并返回http响应报文</p>
+<h3 id="1-2-特性"><a href="#1-2-特性" class="headerlink" title="1.2 特性"></a>1.2 特性</h3><ul>
+<li>简单。基本报文格式为header+body</li>
+<li>灵活、易拓展。<ul>
+<li>http协议里的请求方法、URL/URI、状态码、头文字等每个组成要求都允许自定义和扩充</li>
+<li>http工作在应用层（即OSI七层模型的第七层），且下层可以随意变化</li>
+</ul>
+</li>
+<li>无状态。服务器不会记忆http的状态， 故不需要额外资源来记录转态信息，能减轻服务器负担。</li>
+<li>明文传输。可直接抓包或通过浏览器控制台查看传输信息，便于调试，但信息也存在易泄漏问题</li>
+<li>不安全。不验证通信方信息身份，易被伪装身份访问，无法证明报文的完整性，易被篡改。</li>
+</ul>
+<h2 id="2-http-https区别"><a href="#2-http-https区别" class="headerlink" title="2. http/https区别"></a>2. http/https区别</h2><h3 id="协议名词解释"><a href="#协议名词解释" class="headerlink" title="协议名词解释"></a>协议名词解释</h3><ul>
+<li>htttp：hyper text transfer protocol（超文本传输协议）</li>
+<li>https：hyper text transfer protocol（超文本安全传输协议）</li>
+<li>ssl：secure socket layer（安全套接字）</li>
+<li>tsl：transport layer security（安全传输协议）</li>
+</ul>
+<p>HTTPS = HTTP + SSL/TSL</p>
+<h3 id="一些不同"><a href="#一些不同" class="headerlink" title="一些不同"></a>一些不同</h3><p>HTTPS解决了不安全问题，在TCP和HTTP网络层之间加入了SSL/TLS安全协议，使得报文能够安全传输</p>
+<p>HTTPS在TCP三次握手后，还需要SSL/TLS的握手过程，才可进入加密报文传输</p>
+<p>HTTP的端口号为80，HTTPS的端口号为443</p>
+<p>HTTPS需要向CA申请数字证书，来保证服务器身份可信</p>
+<h2 id="3-https"><a href="#3-https" class="headerlink" title="3. https"></a>3. https</h2><h3 id="3-1-特点"><a href="#3-1-特点" class="headerlink" title="3.1 特点"></a>3.1 特点</h3><ul>
+<li>信息加密，交互信息无法被窃取</li>
+<li>校验机制，无法篡改通信内容，篡改后无法正常显示</li>
+<li>身份证书，证明报文的完整性<h3 id="3-2-优点"><a href="#3-2-优点" class="headerlink" title="3.2 优点"></a>3.2 优点</h3></li>
+<li>在数据传输过程中，使用密钥加密，安全性更高</li>
+<li>可认知用户和服务器，确保数据发送到正确的用户和服务器<h3 id="3-3-缺点"><a href="#3-3-缺点" class="headerlink" title="3.3 缺点"></a>3.3 缺点</h3></li>
+<li>握手阶段延时较高，在会话前还会进行SSL握手</li>
+<li>部署成本高，需要购买CA证书；需要加解密计算，占用CPU资源，需要服务器配置或数目高<h3 id="3-4-加密方式"><a href="#3-4-加密方式" class="headerlink" title="3.4 加密方式"></a>3.4 加密方式</h3></li>
+</ul>
+<ol>
+<li>对称加密<br> 只使用一个密钥，运算速度快，密钥必须保密，无法做到安全的密钥加密</li>
+<li>非对称加密<br>使用两个密钥，公钥可以任意分发而私钥保密，解决密钥交换问题，但速度慢</li>
+<li>混合加密<br>实现信息的机密性，解决窃听风险  </li>
+</ol>
+<p><strong>HHTPS采用对称加密和非对称加密结合的混合加密方式</strong>  </p>
+<h3 id="3-5-验证流程"><a href="#3-5-验证流程" class="headerlink" title="3.5 验证流程"></a>3.5 验证流程</h3><ol>
+<li><p>client发出HTTP请求，连接到server端口</p>
+</li>
+<li><p>Server将自己的信息依数字证书的形式返回给client</p>
+</li>
+<li><p>验证证书合法性，Server收到client响应后会检验证书合法性</p>
+</li>
+<li><p>生成随机密码（RAS签名），即验证后浏览器会生成一个随机的对称密钥，并用公钥加密，让server用私钥解密，解密后用这个密钥进行传输</p>
+</li>
+<li><p>验证server身份后，client生成一个对称加密的算法和对应密钥，以公钥加密后发送给server</p>
+<h3 id="3-6-输入URL到显示的过程"><a href="#3-6-输入URL到显示的过程" class="headerlink" title="3.6 输入URL到显示的过程"></a>3.6 输入URL到显示的过程</h3></li>
+<li><p>URL（Uniform Resolution Locator）</p>
+<p>格式 ：Scheme：//host.domain:port/path/filename</p>
+</li>
+</ol>
+<ul>
+<li>Scheme：定义因特网服务类型 http/https/ftp/file</li>
+<li>Host：定义域主机（http默认为主机为wwww）</li>
+<li>DOmain：因特网域名</li>
+<li>Port：主机上的端口号（http:80 ，hhtps:443）</li>
+<li>Path：服务器上的路径</li>
+<li>Filename：文档/资源名</li>
+</ul>
+<ol start="2">
+<li><p>DNS</p>
+<p>  DNS协议用来将域名转换成IP地址，也可将IP地址转换为域名地址</p>
+<p>  DNS面向用户，IP面向主机</p>
+<p>  域名服务主要基于UDP实现，服务器端口为53</p>
+</li>
+<li><p>整个过程</p>
+<ol>
+<li>输入URL</li>
+<li>浏览器依次在 浏览器缓存-&gt;&gt;系统缓存-&gt;&gt;路由器缓存中去寻找匹配的URL，若有则直接出现，若无就继续执行</li>
+<li>发送HTPP请求前，浏览器先进行域名解析（即DNS解析）</li>
+<li>获得IP之后，浏览器向服务器发起TCP连接，与浏览器建立TCP三次握手</li>
+<li>握手成功后，浏览器向服务器发送HTTP请求，来请求服务器端的数据包</li>
+<li>服务器处理请求，将数据返回给浏览器</li>
+<li>浏览器收到HTTP响应，并查询状态，成功后进行下一步，否则弹出对应状态码</li>
+<li>读取页面内容，进行浏览器渲染，并关闭TCP连接（四次挥手）</li>
+</ol>
+</li>
+</ol>
 
             </div>
             <hr>
@@ -235,7 +307,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/C-C/">C/C++</a>
+                      <a class="hover-with-bg" href="/categories/Network/">Network</a>
                     
                   </div>
                 
@@ -253,9 +325,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/28/network-1/">
+                      <a href="/2023/03/05/Interview-1/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HTTP/HTTPS</span>
+                        <span class="hidden-mobile">Interview_1</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -263,8 +335,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/10/25/BitOperation/">
-                        <span class="hidden-mobile">BitOperation</span>
+                      <a href="/2021/11/02/out-of-bounds/">
+                        <span class="hidden-mobile">out_of_bounds</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
