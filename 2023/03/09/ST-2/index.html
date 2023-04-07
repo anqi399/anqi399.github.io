@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="TCP基本概述">
+  <meta name="description" content="测试常见实战问题面经">
   <meta name="author" content="anqi">
   <meta name="keywords" content="">
   
-  <title>TCP（一） - 你睡了吗</title>
+  <title>ST-2 - 你睡了吗</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -151,7 +151,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="TCP（一）">
+            <span class="h2" id="subtitle" title="ST-2">
               
             </span>
 
@@ -161,8 +161,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-01 21:11" pubdate>
-        2022年3月1日 晚上
+      <time datetime="2023-03-09 16:13" pubdate>
+        2023年3月9日 下午
       </time>
     </span>
   
@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      897 字
+      1.2k 字
     </span>
   
 
@@ -183,7 +183,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      11
        分钟
     </span>
   
@@ -213,25 +213,26 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">TCP（一）</h1>
+            <h1 style="display: none">ST-2</h1>
             
             <div class="markdown-body">
-              <p>TCP基本概述</p>
+              <p>测试常见实战问题面经</p>
 <span id="more"></span>
-<h2 id="TCP基本认识"><a href="#TCP基本认识" class="headerlink" title="TCP基本认识"></a>TCP基本认识</h2><h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>TCP是<strong>面向连接的、可靠的、基于字节流</strong>的传输层通信协议，工作在传输层，确保接收端接收的网络包是<strong>无损坏、无间隔、非冗余和按序的</strong><br>    - <strong>面向连接</strong>：一定是「一对一」才能连接，不能像 UDP 协议可以一个主机同时向多个主机发送消息，无法做到的「一对多」<br>    - <strong>可靠的</strong>：无论的网络链路中出现了怎样的链路变化，TCP 都可以保证一个报文一定能够到达接收端<br>    - <strong>字节流</strong>：用户消息通过 TCP 协议传输时，消息可能会被操作系统「分组」成多个的 TCP 报文，如果接收方的程序如果不知道「消息的边界」，是无法读出一个有效的用户消息的。并且 TCP 报文是「有序的」，当「前一个」TCP 报文没有收到的时候，即使它先收到了后面的 TCP 报文，那么也不能扔给应用层去处理，同时对「重复」的 TCP 报文会自动丢弃</p>
-<h3 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h3><p><strong>用于保证可靠性和流量控制维护的某些状态信息，这些信息的组合，包括Socket、序列号和窗口大小称为连接</strong>，建立一个 TCP 连接是需要客户端与服务器端达成上述三个信息的共识<br>    - <strong>Socket</strong>：由 IP 地址和端口号组成<br>    - <strong>序列号</strong>：用来解决乱序问题等<br>    - <strong>窗口大小</strong>：用来做流量控制</p>
-<h3 id="TCP与UDP区别"><a href="#TCP与UDP区别" class="headerlink" title="TCP与UDP区别"></a>TCP与UDP区别</h3><ul>
-<li><strong>连接</strong>：TCP 是面向连接的传输层协议，传输数据前先要建立连接；UDP 是不需要连接，即刻传输数据。</li>
-<li><strong>服务对象</strong>：TCP 是一对一的两点服务，即一条连接只有两个端点；UDP 支持一对一、一对多、多对多的交互通信</li>
-<li><strong>可靠性</strong>：TCP 是可靠交付数据的，数据可以无差错、不丢失、不重复、按序到达；UDP 是尽最大努力交付，不保证可靠交付数据</li>
-<li><strong>拥塞控制、流量控制</strong>：TCP 有拥塞控制和流量控制机制，保证数据传输的安全性；UDP 则没有，即使网络非常拥堵了，也不会影响 UDP 的发送速率</li>
-<li><strong>首部开销</strong>：TCP 首部长度较长，会有一定的开销，首部在没有使用「选项」字段时是 <code>20</code> 个字节，如果使用了「选项」字段则会变长的；UDP 首部只有 8 个字节，并且是固定不变的，开销较小</li>
-<li><strong>传输方式</strong>：TCP 是流式传输，没有边界，但保证顺序和可靠。UDP 是一个包一个包的发送，是有边界的，但可能会丢包和乱序</li>
-<li><strong>分片不同</strong>：TCP 的数据大小如果大于 MSS 大小，则会在传输层进行分片，目标主机收到后，也同样在传输层组装 TCP 数据包，如果中途丢失了一个分片，只需要传输丢失的这个分片<br>UDP 的数据大小如果大于 MTU 大小，则会在 IP 层进行分片，目标主机收到后，在 IP 层组装完数据，接着再传给传输层</li>
-</ul>
-<h3 id="TCP与UDP应用场景"><a href="#TCP与UDP应用场景" class="headerlink" title="TCP与UDP应用场景"></a>TCP与UDP应用场景</h3><ul>
-<li>TCP面向连接，能保证数据的可靠性交付，经常用于<code>FTP</code>文件传输和HTTP/HTTPS</li>
-<li>UDP 面向无连接，可以随时发送数据，且UDP本身的处理既简单又高效，因此经常用于：包总量较少的通信，如 <code>DNS</code> 、<code>SNMP</code> 等；视频、音频等多媒体通信；广播通信；</li>
+<h3 id="如何测试一个纸杯？"><a href="#如何测试一个纸杯？" class="headerlink" title="如何测试一个纸杯？"></a>如何测试一个纸杯？</h3><p>功能度：用水杯装水看漏不漏；水能不能被喝到<br>安全性：杯子有没有毒或细菌<br>可靠性：杯子从不同高度落下的损坏程度<br>可移植性：杯子在不同的地方、温度等环境下是否都可以正常使用<br>兼容性：杯子是否能够容纳果汁、白水、酒精、汽油等<br>易用性：杯子是否烫手、是否有防滑措施、是否方便饮用<br>用户文档：使用手册是否对杯子的用法、限制、使用条件等有详细描述<br>疲劳测试：将杯子盛上水放24小时检查泄漏时间和情况；盛上汽油放24小时检查泄漏时间和情况等<br>压力测试：用根针并在针上面不断加重量，看压强多大时会穿透</p>
+<h3 id="测试手机开机键"><a href="#测试手机开机键" class="headerlink" title="测试手机开机键"></a>测试手机开机键</h3><p>功能测试：按下开机键，屏幕能否亮起<br>性能测试：按下开机键，屏幕能否在规定时间内亮起<br>压力测试：连续多次按下开机键，观察屏幕是否能一直亮起，到多久时间失灵<br>健壮性测试：给定一个中了病毒的手机或者是淘汰许久的老机子，安歇开机键观察屏幕能否亮起<br>可靠性测试：连续按下开机键有限次数，比如1万次，记录屏幕未亮起的次数<br>可用性测试：开机键按下费不费力，开机键的形状设计是否贴合手指，开机键的位置设计是否方便</p>
+<h3 id="登录功能怎么进行测试？"><a href="#登录功能怎么进行测试？" class="headerlink" title="登录功能怎么进行测试？"></a>登录功能怎么进行测试？</h3><ul>
+<li><p>UI测试<br>查看界面上的所有元素是否齐全；没有输入内容时，是否有相应的提示语；验证码是否能够显示；鼠标检测，【登陆】按钮默认不能点击；【忘记密码】是否有问号</p>
+</li>
+<li><p>功能测试<br>输入正确、错误的用户名、密码、验证码，点【登陆】能否登陆，是否有相应的提示信息；页面长时间不登陆和操作，验证码会不会过期；【记住密码】【忘记密码】；验证码能否刷新；用户名和密码是否大小写敏感；新用户第一次登陆成功，是否有修改密码提示；用户登录过程中log中是否有个人信息明文打印；是否支持第三方登陆；大写键盘开启的时候要有提示信息 ；不同级别的用户，比如管理员用户和普通用户，登录系统后的权限是否正确；</p>
+</li>
+<li><p>安全测试<br>有没有登陆错误次数的限制；每次登陆错误之后有没有限制再次登陆的时间间隔；是否支持一个账号多地登陆；不同机型登陆，异地登陆是否有提醒；不登录的情况下，在浏览器中直接输入登录后的URL地址，验证是否会重新定向到用户登录界面</p>
+</li>
+<li><p>兼容性测试<br>不同浏览器、不同浏览器版本、不同操作系统、不同屏幕分辨率；用户输入登录信息登陆时，个人信息是不是会显示在浏览器地址栏；用户登陆的时候，通过抓包工具抓数据，密码是否加密；查看页面源代码，验证码是否直接显示在代码中；密码在后台储存时是否加密；是否可以使用登录的API发送登录请求，并绕开验证码校验；</p>
+</li>
+<li><p>性能测试<br>单用户登录的响应时间是否小于3秒；通过工具向登录页发起大量请求，查看页面响应时间的变化；通过工具对登陆功能进行并发测试；通过工具向登录页发起大量请求，查看页面何时崩溃；通过工具向登录页发起大量请求，查看页面崩溃后有没有良好的提示信息；通过工具向登录页发起大量请求，查看页面崩溃后多长时间能够恢复服务；弱网，不同网速时登陆的时间，网络切换和网络延迟时登陆界面是否正常；</p>
+</li>
+<li><p>易用性测试<br>页面是否美观；功能是否都可以使用；页面速度快不快；页面元素加载是否耗费网络流量；能不能第三方登陆；为什么不使用手机验证码登陆；输入框能否可以以Tab键切换。</p>
+</li>
 </ul>
 
             </div>
@@ -242,7 +243,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Network/">Network</a>
+                      <a class="hover-with-bg" href="/categories/ST/">ST</a>
                     
                   </div>
                 
@@ -260,18 +261,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/05/Interview-1/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Interview</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/28/network-1/">
-                        <span class="hidden-mobile">HTTP（一）</span>
+                      <a href="/2023/03/07/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/">
+                        <span class="hidden-mobile">InterfaceTesting</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
